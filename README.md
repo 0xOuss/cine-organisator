@@ -29,6 +29,7 @@ This project is structured into several modules:
 
 ## Installation & Utilisation  
 
-To run the project, first run this command on terminal to install the requirements:\n
+To run the project, first run this command on terminal to install the requirements:   
+
 `pip install -r requirements.txt`
 launch the main script `main.py`, which opens the main menu to start managing your collection of series and films.
