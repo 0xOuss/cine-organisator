@@ -1,0 +1,52 @@
+{
+"successfully_added_a_voir":"est bien ajouté à la liste 'À Voir'",
+"already_added_a_voir":"a déjà été ajouté à la liste 'À Voir'",
+"successfully_deleted_a_voir":"est supprimé de la liste 'À Voir'",
+"info_added_a_voir":"est déjà ajouté à la liste 'À Voir'",
+"update_a_voir":"Mise à jour de la liste 'À Voir'",
+
+"info_nbr_saisons":"saison(s) déjà sortie(s)",
+"qst_viewed_saisons":"Combien de saisons avez-vous vues : ",
+"not_yet_added":"n'est pas encore ajouté",
+"successfully_modified":"a été bien modifié",
+"cant_modify_movie":"Vous ne pouvez pas modifier les éléments d'un film !",
+"successfully_updated":"La mise à jour a été effectuée avec succès !",
+"enter_name_code":"Saisissez le titre ou le code de votre film ou série :",
+
+"successfully_added_deja_vu":"est bien ajouté à la liste 'Déjà Vu'",
+"already_added_deja_vu":"a déjà été ajouté à la liste 'Déjà Vu'",
+"successfully_deleted_deja_vu":"est supprimé de la liste 'Déjà Vu'",
+"info_added_deja_vu":"est déjà ajouté à la liste 'Déjà Vu'",
+"not_found_deja_vu":"n'existe pas dans la liste 'Déjà Vu'",
+"update_deja_vu":"Mise à jour de la liste 'Déjà Vu'",
+
+"not_found":"n'existe dans aucune liste",
+"exit":"Quitter...",
+"state":"État",
+"duration":"Durée",
+"nbr_saisons":"Nombre de saisons",
+"nbr_saisons_viewed":"Nombre de saisons vues",
+"nbr_saisons_not_viewed":"Nombre de saisons non vues",
+"on":"le",
+"there_are":"Il y a",
+"elements":"éléments",
+"saisons_to_watch1":"Il vous reste",
+"saisons_to_watch2":"saisons à regarder",
+
+"problem_try_again":"Un problème est survenu (probablement un problème de connexion), veuillez réessayer plus tard",
+"try_again":"Erreur, veuillez retaper :",
+"err_nbr_saison":"ERREUR, vous avez saisi un nombre supérieur au nombre de saisons actuel ou inférieur à 0. Veuillez réessayer :",
+"err_enter_name_code":"Un problème est survenu, veuillez retaper le titre ou le code de votre film ou série :",
+
+"menu":"1.  Ajouter un film ou une série\n2.  Supprimer un film ou une série\n3.  Afficher un film ou une série\n4.  Afficher une liste\n5.  Mettre à jour\n0.  Quitter\n",
+"menu_cho1_1":"1.  Ajouter à 'À Voir'\n2.  Ajouter à 'Déjà Vu'\n3.  Retour\n0.  Quitter\n",
+"menu_cho1_3_a_voir":"1.  Ajouter à 'Déjà Vu'\n2.  Supprimer de la liste 'À Voir'\n3.  Retour\n0.  Quitter\n",
+"menu_cho1_3_deja_vu":"1.  Ajouter à 'À Voir'\n2.  Supprimer de la liste 'Déjà Vu'\n3.  Modifier le nombre de saisons déjà vues\n4.  Retour\n0.  Quitter\n",
+"menu_cho1_3_not_yet_added":"\n\n1.  Ajouter à 'À Voir'\n2.  Ajouter à 'Déjà Vu'\n3.  Retour\n",
+"menu_cho1_4":"1.  Afficher la liste 'À Voir'\n2.  Afficher la liste 'Déjà Vu'\n3.  Afficher la liste 'Saisons non vues'\n4.  Retour\n0.  Quitter\n",
+"menu_cho1_5":"1.  Modifier un élément de la liste 'Déjà Vu'\n2.  Mettre à jour toutes les listes\n3.  Retour\n0.  Quitter\n",
+
+
+"welcome1":"______ _\n| ___ (_)\n| |_/ /_  ___ _ ____   _____ _ __  _   _  ___          __ _\n| ___ \\ |/ _ \\ '_ \\ \\ / / _ \\ '_ \\| | | |/ _ \\        / _` |\n| |_/ / |  __/ | | \\ V /  __/ | | | |_| |  __/       | (_| |\n\\____/|_|\\___|_| |_|\\_/ \\___|_| |_|\\__,_|\\___|        \\__,_|\n",
+"welcome2":" _____ _                 _____                       _           _                 \n/  __ (_)       /       |  _  |                     (_)         | |                \n| /  \/ _ _ __   ___     | | | |_ __ __ _  __ _ _ __  _ ___  __ _| |_ ___ _   _ _ __\n| |   | | '_ \\ / _ \\    | | | | '__/ _` |/ _` | '_ \\| / __|/ _` | __/ _ \\ | | | '__|\n| \\__/\\ | | | |  __/    \\ \\_/ / | | (_| | (_| | | | | \\__ \\ (_| | ||  __/ |_| | |  \n \\____/_|_| |_|\\___|     \\___/|_|  \\__, |\\__,_|_| |_|_|___/\\__,_|\\__\\___|\\__,_|_|  \n                                    __/ |                                          \n                                   |___/                                                                          \n"
+}
