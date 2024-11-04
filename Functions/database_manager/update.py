@@ -131,4 +131,4 @@ def update_lists(con):
         update_loading(varp, Texts['update_a_voir'])
     con.commit()
 
-    print(f'{Texts['successfully_updated']} \n\n******************\n\n') 
+    print(f"{Texts['successfully_updated']} \n\n******************\n\n") 
