@@ -15,7 +15,7 @@ def delete_from_a_voir(x, cur):
     os.remove(f"{A_voir_path}/{x}.jpg")
     clear_terminal()
     info=get_data(x)
-    print(f"{info[1]}: '{info[2]}' {info[5]}, {Texts["successfully_deleted_a_voir"]}\n\n******************\n\n")
+    print(f"{info[1]}: '{info[2]}' {info[5]}, {Texts['successfully_deleted_a_voir']}\n\n******************\n\n")
 
 def delete_from_deja_vu(x, cur):
     cur.execute(f"DELETE FROM DÉJÀ_VU WHERE  Code={x} ")
@@ -26,7 +26,7 @@ def delete_from_deja_vu(x, cur):
         pass
     clear_terminal()
     info=get_data(x)
-    print(f"{info[1]}: '{info[2]}' {info[5]}, {Texts["successfully_deleted_deja_vu"]}\n\n******************\n\n")                #os.system("clear")
+    print(f"{info[1]}: '{info[2]}' {info[5]}, {Texts['successfully_deleted_deja_vu']}\n\n******************\n\n")                #os.system("clear")
 
 def delete(x, con, cur):
     if con.execute(f"SELECT 1 FROM A_VOIR WHERE Code={x}").fetchone():
@@ -35,5 +35,5 @@ def delete(x, con, cur):
         delete_from_deja_vu(x, cur)
     else:
         info=get_data(x)
-        print(f"{info[1]}: '{info[2]}' {info[5]}, {Texts["not_found"]}\n\n******************\n\n")
+        print(f"{info[1]}: '{info[2]}' {info[5]}, {Texts['not_found']}\n\n******************\n\n")
     con.commit()

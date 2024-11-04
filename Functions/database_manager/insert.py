@@ -66,7 +66,7 @@ def add_deja_vu(data, con, cur):
             except:
                 while True:
                     try:
-                        nbr_saison_vu=int(input(Texts["err_nbr_saison"]))
+                        nbr_saison_vu=int(input(Texts['err_nbr_saison']))
                         if (nbr_saison_vu<=int(data[7])  and nbr_saison_vu>0):
                             break
                     except:
@@ -91,7 +91,7 @@ def add_deja_vu(data, con, cur):
         #cur.execute("CREATE TABLE IF NOT EXISTS DÉJÀ_VU(Code INT UNIQUE,Type TEXT,Titre TEXT UNIQUE, Image BLOB, Etat TEXT, Date TEXT, Durée TEXT,  Saison TEXT,Saison_vu TEXT, Saison_non_vu TEXT)")
         con.commit()
         clear_terminal()
-        print(f"{data[1]}: '{data[2]}' {data[5]}, {Texts["successfully_added_deja_vu"]}\n\n******************\n\n")
+        print(f"{data[1]}: '{data[2]}' {data[5]}, {Texts['successfully_added_deja_vu']}\n\n******************\n\n")
     except:
         clear_terminal()
-        print(f"{data[1]}: '{data[2]}' {data[5]}, {Texts["already_added_deja_vu"]} '\n\n******************\n\n")
+        print(f"{data[1]}: '{data[2]}' {data[5]}, {Texts['already_added_deja_vu']} '\n\n******************\n\n")

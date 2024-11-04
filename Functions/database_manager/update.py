@@ -39,13 +39,13 @@ def update_nbr_viewed_saisons(x, con, cur):
         rows = cur.fetchall()
         if list(rows[0])[1]=='Serie':
             try:
-                nbr_saison_vu=int(input(Texts["qst_viewed_saisons"]))
+                nbr_saison_vu=int(input(Texts['qst_viewed_saisons']))
                 if (nbr_saison_vu>int(list(rows[0])[7]) or nbr_saison_vu<0):
                     1/0
             except:
                 while True:
                     try:
-                        nbr_saison_vu=int(input(Texts["err_nbr_saison"]))
+                        nbr_saison_vu=int(input(Texts['err_nbr_saison']))
                         if (nbr_saison_vu<=int(list(rows[0])[7]) and nbr_saison_vu>=0):
                             break
                     except:
@@ -73,14 +73,14 @@ def update_nbr_viewed_saisons(x, con, cur):
                 con.execute(f"UPDATE SAISONS_NON_VU SET Saison_non_vu = {nbr_saison_non_vu} WHERE Code ={x}")
                 con.execute(f"UPDATE DÉJÀ_VU SET Saison_vu = {nbr_saison_vu} WHERE Code ={x}")
                 con.execute(f"UPDATE DÉJÀ_VU SET Saison_non_vu = {nbr_saison_non_vu} WHERE Code ={x}")
-            print(f"{rows[1]}: '{rows[2]}' {rows[5]}, {Texts["successfully_modified"]}")
+            print(f"{rows[1]}: '{rows[2]}' {rows[5]}, {Texts['successfully_modified']}")
             con.commit()
             
         else:
-            print(Texts["cant_modify_movie"])
+            print(Texts['cant_modify_movie'])
     else:
         data=get_data(x)
-        print(f"{data[1]}: '{data[2]}' {data[5]}, {Texts["not_found_deja_vu"]}")
+        print(f"{data[1]}: '{data[2]}' {data[5]}, {Texts['not_found_deja_vu']}")
 
 
 def update_lists(con):
@@ -114,7 +114,7 @@ def update_lists(con):
             con.execute(f"UPDATE SAISONS_NON_VU SET Saison_non_vu = '{z[3]}' WHERE Code ={code}")
         clear_terminal()
         varp=(i/taille)*100
-        update_loading(varp, Texts["update_deja_vu"])
+        update_loading(varp, Texts['update_deja_vu'])
     cur.execute(f"SELECT Code,Type FROM A_VOIR ")
     rows = cur.fetchall()
     taille=len(rows)
@@ -128,7 +128,7 @@ def update_lists(con):
             con.execute(f"UPDATE A_VOIR SET Saison = {z[2]} WHERE Code ={code}")
         clear_terminal()
         varp=(i/taille)*100
-        update_loading(varp, Texts["update_a_voir"])
+        update_loading(varp, Texts['update_a_voir'])
     con.commit()
 
-    print(f'{Texts["successfully_updated"]} \n\n******************\n\n') 
+    print(f'{Texts['successfully_updated']} \n\n******************\n\n') 

@@ -8,13 +8,13 @@ with open(Texts_path, encoding='utf-8') as file:
 
 
 def show_lists(rows, x):
-    print(f"{Texts["there_are"]} {len(rows)} {Texts["elements"]}\n")
+    print(f"{Texts['there_are']} {len(rows)} {Texts['elements']}\n")
     if x==0:
         for i in range(0,len(rows)):
-            print(f".   {list(rows[i])[0]}, {list(rows[i])[1]}: '{list(rows[i])[2]}' {list(rows[i])[4]} {Texts["on"]} {list(rows[i])[5]}\n")
+            print(f".   {list(rows[i])[0]}, {list(rows[i])[1]}: '{list(rows[i])[2]}' {list(rows[i])[4]} {Texts['on']} {list(rows[i])[5]}\n")
     else:
         for i in range(0,len(rows)):
-            print(f".   {list(rows[i])[0]}, {list(rows[i])[1]}: '{list(rows[i])[2]}' {list(rows[i])[4]} {Texts["on"]} {list(rows[i])[5]}, {Texts["saisons_to_watch1"]} {list(rows[i])[9]} {Texts["saisons_to_watch2"]}\n")   
+            print(f".   {list(rows[i])[0]}, {list(rows[i])[1]}: '{list(rows[i])[2]}' {list(rows[i])[4]} {Texts['on']} {list(rows[i])[5]}, {Texts['saisons_to_watch1']} {list(rows[i])[9]} {Texts['saisons_to_watch2']}\n")   
     
     print('\n\n******************\n\n')
 
@@ -38,14 +38,14 @@ def select_element_a_voir(x,cur):
     cur.execute(f"SELECT * FROM A_VOIR WHERE Code={x}")
     rows = cur.fetchall()
     rows=list(rows[0])
-    print(f"'{rows[2]}',  {Texts["info_added_a_voir"]}\n\n{rows[1]}: '{rows[2]}' {rows[4]} {rows[5]}\nCode: {rows[0]}\n{Texts["state"]}: {rows[4]}\n{Texts["duration"]}: {rows[6]}\n{Texts["nbr_saisons"]}: {rows[7]}\n\n******************\n\n")
+    print(f"'{rows[2]}',  {Texts['info_added_a_voir']}\n\n{rows[1]}: '{rows[2]}' {rows[4]} {rows[5]}\nCode: {rows[0]}\n{Texts['state']}: {rows[4]}\n{Texts['duration']}: {rows[6]}\n{Texts['nbr_saisons']}: {rows[7]}\n\n******************\n\n")
     open_cover(f"{A_voir_path}/{rows[0]}.jpg")
 
 def select_element_deja_vu(x,cur):
     cur.execute(f"SELECT * FROM DÉJÀ_VU WHERE Code={x}")
     rows = cur.fetchall()
     rows=list(rows[0])
-    print(f"'{rows[2]}',  {Texts["info_added_deja_vu"]}\n\n{rows[1]}: '{rows[2]}' {rows[4]} {rows[5]}\nCode: {rows[0]}\n{Texts["state"]}: {rows[4]}\n{Texts["duration"]}: {rows[6]}\n{Texts["nbr_saisons"]}: {rows[7]}\n{Texts["nbr_saisons_viewed"]}: {rows[8]}\n{Texts["nbr_saisons_not_viewed"]}: {rows[9]}\n\n******************\n\n")
+    print(f"'{rows[2]}',  {Texts['info_added_deja_vu']}\n\n{rows[1]}: '{rows[2]}' {rows[4]} {rows[5]}\nCode: {rows[0]}\n{Texts['state']}: {rows[4]}\n{Texts['duration']}: {rows[6]}\n{Texts['nbr_saisons']}: {rows[7]}\n{Texts['nbr_saisons_viewed']}: {rows[8]}\n{Texts['nbr_saisons_not_viewed']}: {rows[9]}\n\n******************\n\n")
     open_cover(f"{Deja_vu_path}/{rows[0]}.jpg")
 
 def check_existence_a_voir(x, con):
