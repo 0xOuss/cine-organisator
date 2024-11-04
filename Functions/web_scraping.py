@@ -99,7 +99,7 @@ def get_film_data(soup):
     try:
         date=""
         date_brut= soup.find('span', attrs={'class' :"date"})
-        date_brut= date_brut.text
+        date_brut= ' '.join(date_brut.text.split())
         for i in range(len(date_brut)): 
             if date_brut[i].isdigit() or date_brut[i].isalpha()  or date_brut[i]==' ':
                 date = date + date_brut[i] 

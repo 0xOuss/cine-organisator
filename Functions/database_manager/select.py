@@ -1,10 +1,9 @@
 from config import  Texts_path
 import json 
-import  os
+from Functions.ui_manager import open_cover
+from config import  A_voir_path, Deja_vu_path
 
-Texts_path=os.path.dirname(__file__).rsplit('/', 2)[0]+Texts_path
-
-with open(Texts_path) as file:
+with open(Texts_path, encoding='utf-8') as file:
     Texts = json.load(file)
 
 
@@ -40,14 +39,14 @@ def select_element_a_voir(x,cur):
     rows = cur.fetchall()
     rows=list(rows[0])
     print(f"'{rows[2]}',  {Texts["info_added_a_voir"]}\n\n{rows[1]}: '{rows[2]}' {rows[4]} {rows[5]}\nCode: {rows[0]}\n{Texts["state"]}: {rows[4]}\n{Texts["duration"]}: {rows[6]}\n{Texts["nbr_saisons"]}: {rows[7]}\n\n******************\n\n")
-    os.system(f"open {rows[3]}")
+    open_cover(f"{A_voir_path}/{rows[0]}.jpg")
 
 def select_element_deja_vu(x,cur):
     cur.execute(f"SELECT * FROM DÉJÀ_VU WHERE Code={x}")
     rows = cur.fetchall()
     rows=list(rows[0])
     print(f"'{rows[2]}',  {Texts["info_added_deja_vu"]}\n\n{rows[1]}: '{rows[2]}' {rows[4]} {rows[5]}\nCode: {rows[0]}\n{Texts["state"]}: {rows[4]}\n{Texts["duration"]}: {rows[6]}\n{Texts["nbr_saisons"]}: {rows[7]}\n{Texts["nbr_saisons_viewed"]}: {rows[8]}\n{Texts["nbr_saisons_not_viewed"]}: {rows[9]}\n\n******************\n\n")
-    os.system(f"open {rows[3]}")
+    open_cover(f"{Deja_vu_path}/{rows[0]}.jpg")
 
 def check_existence_a_voir(x, con):
     return con.execute(f"SELECT 1 FROM A_VOIR WHERE Code={x}").fetchone()

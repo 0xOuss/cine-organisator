@@ -1,3 +1,6 @@
+import os
+import platform
+
 def input_err_handling(text, text_err, list_cho):
     try:
         cho=int(input(text))
@@ -37,3 +40,16 @@ def update_loading(varp, text):
         print(f"{text}\n\n| # # # # # # # # # . |     {varp:2.2f} %")
     else:
         print(f"{text}\n\n| # # # # # # # # # # |    {varp:3.2f} %")
+
+def clear_terminal():
+    if platform.system() == "Windows":
+        os.system("cls")  
+    else:
+        os.system("clear") 
+
+
+def open_cover(cover_path):
+    if platform.system() == "Windows":
+        os.startfile(cover_path)  
+    else:
+        os.system(f"open '{cover_path}'")

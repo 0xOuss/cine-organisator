@@ -7,25 +7,19 @@ from Functions.database_manager.insert import   add_a_voir, add_deja_vu
 from Functions.database_manager.update import   update_lists, update_nbr_viewed_saisons
 from Functions.database_manager.select import   check_existence_a_voir, check_existence_deja_vu, select_a_voir, select_deja_vu, select_element_a_voir, select_element_deja_vu, select_saisons_non_vues
 from Functions.web_scraping import  search_url_google, get_code_and_url, get_data
-from Functions.ui_manager import input_err_handling
+from Functions.ui_manager import input_err_handling, clear_terminal;
 
 
 
-A_voir_path=os.path.dirname(__file__).rsplit('/', 1)[0]+A_voir_path
-Deja_vu_path=os.path.dirname(__file__).rsplit('/', 1)[0]+Deja_vu_path
-Texts_path=os.path.dirname(__file__).rsplit('/', 1)[0]+Texts_path
-
-with open(Texts_path) as file:
+with open(Texts_path, encoding='utf-8') as file:
     Texts = json.load(file)
 
 
 def main_menu(con, cur):
 
-    os.system("clear")
-
+    clear_terminal()
     print(Texts["welcome1"])
     print(Texts["welcome2"])
-
     input_err=0                                     
     try:
         cho1=int(input(Texts["menu"]))
@@ -41,7 +35,7 @@ def main_menu(con, cur):
         except:
             input_err=0
     if cho1==0:
-        os.system("clear")
+        clear_terminal()
         print(Texts["exit"])
         con.close()
         quit()
@@ -49,21 +43,21 @@ def main_menu(con, cur):
 
 
     while cho1!=0:
-        os.system("clear")
+        clear_terminal()
         if cho1==1:
             while cho1==1:
                 cho=input_err_handling(Texts["menu_cho1_1"], Texts["try_again"], [0,1,2,3])
-                os.system("clear")
+                clear_terminal()
                 try:
                     if cho==1 or cho==2:
                         x=input(Texts["enter_name_code"])
                         if x.isdigit() :
                             tab=get_data(x)
                         else:
-                            tab=get_data(search_url_google(x))
-                        os.system("clear")
+                            tab=get_data(get_code_and_url(search_url_google(x))[0])
+                        clear_terminal()
                 except:
-                    os.system("clear")
+                    clear_terminal()
                     print(Texts["problem_try_again"])
                     print("\n\n******************\n\n")
                     cho=3
@@ -85,10 +79,10 @@ def main_menu(con, cur):
                 if not x.isdigit():
                     x=get_code_and_url(search_url_google(x))[0]
 
-                os.system("clear")
+                clear_terminal()
                 delete(x , con=con, cur=cur)
             except: 
-                os.system("clear")
+                clear_terminal()
                 print(Texts["problem_try_again"])
                 print("\n\n******************\n\n")
                 cho=3
@@ -105,11 +99,11 @@ def main_menu(con, cur):
                     break
                 except: 
                     x=input(Texts["err_enter_name_code"])
-            os.system("clear")
+            clear_terminal()
             if check_existence_a_voir(x, con=con):
                 select_element_a_voir(x,cur=cur)
                 cho=input_err_handling(Texts["menu_cho1_3_a_voir"], Texts["try_again"], [0,1,2,3])
-                os.system("clear")
+                clear_terminal()
                 if cho==1:
                     add_deja_vu(get_data(x), con=con, cur=cur)
                 elif cho==2:
@@ -124,7 +118,7 @@ def main_menu(con, cur):
             elif check_existence_deja_vu(x, con=con):
                 select_element_deja_vu(x,cur=cur)
                 cho=input_err_handling(Texts["menu_cho1_3_deja_vu"], Texts["try_again"], [0,1,2,3,4])
-                os.system("clear")
+                clear_terminal()
                 if cho==1:
                     add_a_voir(get_data(x), con=con, cur=cur)
                 elif cho==2:
@@ -149,7 +143,7 @@ def main_menu(con, cur):
                     webbrowser.open(tab[3])
 
                     cho=input_err_handling(Texts["menu_cho1_3_not_yet_added"], Texts["try_again"], [1,2,3])
-                    os.system("clear")
+                    clear_terminal()
 
                     if cho==1:
                         add_a_voir(tab, con=con, cur=cur)
@@ -167,7 +161,7 @@ def main_menu(con, cur):
         elif cho1==4:
             while cho1==4:
                 cho=input_err_handling(Texts["menu_cho1_4"], Texts["try_again"], [0,1,2,3,4])
-                os.system("clear")
+                clear_terminal()
                 if cho==1:
                     select_a_voir(cur=cur)
                 elif cho==2:
@@ -183,7 +177,7 @@ def main_menu(con, cur):
         elif cho1==5:
             while cho1==5:
                 cho=input_err_handling(Texts["menu_cho1_5"], Texts["try_again"], [0,1,2,3])
-                os.system("clear")
+                clear_terminal()
                 if cho==1:
                     x=input(Texts["enter_name_code"])
                     while True:
@@ -193,7 +187,7 @@ def main_menu(con, cur):
                             break
                         except: 
                             x=input(Texts["err_enter_name_code"])
-                    os.system("clear")
+                    clear_terminal()
                     update_nbr_viewed_saisons(x, con=con, cur=cur)
                     print('\n\n******************\n\n')
                 elif cho==2:
@@ -208,7 +202,7 @@ def main_menu(con, cur):
             
         cho1=input_err_handling(Texts["menu"], Texts["try_again"], [0,1,2,3,4,5])  
         
-    os.system("clear")
+    clear_terminal()
     print(Texts["exit"])
     con.close()
     quit()

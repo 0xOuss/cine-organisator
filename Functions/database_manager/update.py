@@ -1,12 +1,10 @@
 from Functions.web_scraping import get_data, get_film_data, get_serie_data
-from Functions.ui_manager import update_loading
+from Functions.ui_manager import update_loading, clear_terminal
 from config import  Texts_path
 import json 
 import  os
 
-Texts_path=os.path.dirname(__file__).rsplit('/', 2)[0]+Texts_path
-
-with open(Texts_path) as file:
+with open(Texts_path, encoding='utf-8') as file:
     Texts = json.load(file)
     
 
@@ -114,7 +112,7 @@ def update_lists(con):
             con.execute(f"UPDATE SAISONS_NON_VU SET Date = '{z[1]}' WHERE Code ={code}")
             con.execute(f"UPDATE SAISONS_NON_VU SET Saison = '{z[2]}' WHERE Code ={code}")
             con.execute(f"UPDATE SAISONS_NON_VU SET Saison_non_vu = '{z[3]}' WHERE Code ={code}")
-        os.system('clear')
+        clear_terminal()
         varp=(i/taille)*100
         update_loading(varp, Texts["update_deja_vu"])
     cur.execute(f"SELECT Code,Type FROM A_VOIR ")
@@ -128,7 +126,7 @@ def update_lists(con):
         con.execute(f"UPDATE A_VOIR SET Date = '{z[1]}' WHERE Code ={code}")
         if type=='Serie':
             con.execute(f"UPDATE A_VOIR SET Saison = {z[2]} WHERE Code ={code}")
-        os.system('clear')
+        clear_terminal()
         varp=(i/taille)*100
         update_loading(varp, Texts["update_a_voir"])
     con.commit()

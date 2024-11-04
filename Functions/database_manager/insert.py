@@ -1,13 +1,10 @@
 import  os
 from config import  A_voir_path, Deja_vu_path, Texts_path
+from Functions.ui_manager import clear_terminal
 import json 
 import requests
 
-A_voir_path=os.path.dirname(__file__).rsplit('/', 2)[0]+A_voir_path
-Deja_vu_path=os.path.dirname(__file__).rsplit('/', 2)[0]+Deja_vu_path
-Texts_path=os.path.dirname(__file__).rsplit('/', 2)[0]+Texts_path
-
-with open(Texts_path) as file:
+with open(Texts_path, encoding='utf-8') as file:
     Texts = json.load(file)
 
 
@@ -23,8 +20,8 @@ def add_a_voir(data, con, cur):
         
         
         try:
-            os.system(f"rm {Deja_vu_path}/{data[0]}.jpg")
-            os.system("clear")
+            os.remove(f"{Deja_vu_path}/{data[0]}.jpg")
+            clear_terminal()
         except:
             pass
         try:
@@ -35,12 +32,13 @@ def add_a_voir(data, con, cur):
                 pass
         except:
             pass 
-        data[3]=photo
         cur.execute("INSERT INTO A_VOIR(Code, Type, Titre, Image , Etat, Date, Durée, Saison) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", data)
         #cur.execute("CREATE TABLE IF NOT EXISTS A_VOIR(Code INT UNIQUE,Type TEXT,Titre TEXT UNIQUE, Image BLOB, Etat TEXT, Date TEXT, Durée TEXT, Saison TEXT)")
         con.commit()
+        clear_terminal()
         print(f"{data[1]}: '{data[2]}' {data[5]}, {Texts['successfully_added_a_voir']} \n\n******************\n\n")
     except:
+        clear_terminal()
         print(f"{data[1]}: '{data[2]}' {data[5]}, {Texts['already_added_a_voir']} \n\n******************\n\n")
 
 
@@ -54,8 +52,8 @@ def add_deja_vu(data, con, cur):
         f.close()
 
         try:
-            os.system(f"rm {A_voir_path}/{data[0]}.jpg")
-            os.system("clear")
+            os.remove(f"{A_voir_path}/{data[0]}.jpg")
+            clear_terminal()
         except:
             pass
         
@@ -79,7 +77,6 @@ def add_deja_vu(data, con, cur):
             nbr_saison_vu="-"
         data.append(nbr_saison_vu)
         data.append(nbr_saison_non_vu)
-        data[3]=photo
         try:
             cur.execute(f"DELETE FROM A_VOIR WHERE  Code={data[0]} ")
         except:
@@ -93,7 +90,8 @@ def add_deja_vu(data, con, cur):
         cur.execute("INSERT INTO DÉJÀ_VU(Code, Type, Titre, Image , Etat, Date, Durée, Saison,Saison_vu, Saison_non_vu) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
         #cur.execute("CREATE TABLE IF NOT EXISTS DÉJÀ_VU(Code INT UNIQUE,Type TEXT,Titre TEXT UNIQUE, Image BLOB, Etat TEXT, Date TEXT, Durée TEXT,  Saison TEXT,Saison_vu TEXT, Saison_non_vu TEXT)")
         con.commit()
-        
+        clear_terminal()
         print(f"{data[1]}: '{data[2]}' {data[5]}, {Texts["successfully_added_deja_vu"]}\n\n******************\n\n")
     except:
+        clear_terminal()
         print(f"{data[1]}: '{data[2]}' {data[5]}, {Texts["already_added_deja_vu"]} '\n\n******************\n\n")
