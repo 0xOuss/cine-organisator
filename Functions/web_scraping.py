@@ -117,7 +117,7 @@ def get_film_data(soup):
 
 
 def get_serie_data(soup):
-    if(type(soup).__name__!="BeautifulSoup"): ################# get updated serie data
+    if(type(soup).__name__!="BeautifulSoup"): ############### get updated serie data
         page = requests.get(get_code_and_url(soup)[1])
         soup = BeautifulSoup ( page.content , "html.parser" )
         soup.prettify()

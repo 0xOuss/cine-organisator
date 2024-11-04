@@ -10,7 +10,6 @@ from Functions.web_scraping import  search_url_google, get_code_and_url, get_dat
 from Functions.ui_manager import input_err_handling, clear_terminal;
 
 
-
 with open(Texts_path, encoding='utf-8') as file:
     Texts = json.load(file)
 
