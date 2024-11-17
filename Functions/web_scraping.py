@@ -112,7 +112,7 @@ def get_film_data(soup):
     except:
         date="Date Inconnue"
         état='À VENIR'
-    return (état,date)
+    return (état,' '.join(date.split()))
 
 
 
@@ -148,5 +148,5 @@ def get_serie_data(soup):
                 état= soup.find('div', attrs={'class' :"label label-text label-sm label-info-full label-status"})
                 état = état.text 
                 nbr_saison=0
-    return (état, date, nbr_saison)
+    return (état, ' '.join(date.split()), nbr_saison)
 
