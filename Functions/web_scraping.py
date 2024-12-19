@@ -3,150 +3,191 @@ from bs4 import BeautifulSoup
 import time
 from datetime import datetime
 from fake_useragent import UserAgent
+
+
 def search_url_google(x):
-    x=x.replace(" ","+")
-    url_recherche=f"https://www.google.com/search?q={x}+allocine"
+    x = x.replace(" ", "+")
+    url_recherche = f"https://www.google.com/search?q={x}+allocine"
     headers = {
         "User-Agent": UserAgent().random  # Utilise un user-agent aléatoire pour simuler un vrai navigateur
     }
     page = requests.get(url_recherche, headers=headers)
-    soup = BeautifulSoup ( page.content , "html.parser" )
+    soup = BeautifulSoup(page.content, "html.parser")
     soup.prettify()
-    url = soup.find('div', attrs={'class' :"MjjYud"})
-    for i in url.find_all('a'):
-        url=i.get('href')
+    url = soup.find("div", attrs={"class": "MjjYud"})
+    for i in url.find_all("a"):
+        url = i.get("href")
         break
-    url=url[7:url.find('html')+4]
-    url=url.replace('%3D','=')
-    if url=='':
-        1/0
+    url = url[7 : url.find("html") + 4]
+    url = url.replace("%3D", "=")
+    if url == "":
+        1 / 0
     return url
 
 
 def get_code_and_url(x):
     if str(x).isdigit():
-        code=int(x)
-        type=code%10
-        if type==2:
-            url=f"https://www.allocine.fr/series/ficheserie_gen_cserie={int(code/10)}.html"
-        else :
-            url=f'https://www.allocine.fr/film/fichefilm_gen_cfilm={int(code/10)}.html'
-        return (code,url)
+        code = int(x)
+        type = code % 10
+        if type == 2:
+            url = f"https://www.allocine.fr/series/ficheserie_gen_cserie={int(code/10)}.html"
+        else:
+            url = (
+                f"https://www.allocine.fr/film/fichefilm_gen_cfilm={int(code/10)}.html"
+            )
+        return (code, url)
     else:
-        url=str(x)
-        if 'serie' in url:
-            type=2
-        else :
-            type=1
-        code=int(''.join(list(filter(str.isdigit, url))))
-        code=code*10+type
-    return (code,url)
-
+        url = str(x)
+        if "serie" in url:
+            type = 2
+        else:
+            type = 1
+        code = int("".join(list(filter(str.isdigit, url))))
+        code = code * 10 + type
+    return (code, url)
 
 
 def get_data(x):
     page = requests.get(get_code_and_url(x)[1])
-    soup = BeautifulSoup ( page.content , "html.parser" )
+    soup = BeautifulSoup(page.content, "html.parser")
     soup.prettify()
 
-    titre= soup.find('div', attrs={'class' :"titlebar titlebar-page"})
-    titre = titre.text 
-    
-    linkphoto=""
-    for i in soup.find_all('img'):
-        if "jpg" in i.get("src") :
-            linkphoto=(i.get("src"))
-        if "png" in i.get("src") :
-            linkphoto=(i.get("src"))
-    plus=linkphoto[linkphoto.find("/c")+1:linkphoto.find("0/")+1]
-    linkphoto=linkphoto.replace(plus,"r_1920_1080")
+    titre = soup.find("div", attrs={"class": "titlebar titlebar-page"})
+    titre = titre.text
 
-    duree_brut= soup.find('div', attrs={'class' :"meta-body-item meta-body-info"})
+    linkphoto = ""
+    for i in soup.find_all("img"):
+        if "jpg" in i.get("src"):
+            linkphoto = i.get("src")
+        if "png" in i.get("src"):
+            linkphoto = i.get("src")
+    plus = linkphoto[linkphoto.find("/c") + 1 : linkphoto.find("0/") + 1]
+    linkphoto = linkphoto.replace(plus, "r_1920_1080")
+
+    duree_brut = soup.find("div", attrs={"class": "meta-body-item meta-body-info"})
     duree_brut = duree_brut.text
-    duree=""
-    test=0
-    for i in duree_brut :
-        if test==1:
-            if i!='\n' and i!='/' and i!='|':
-                duree=duree+i
-        if i=='/' or  i=='|':
-            test=test+1
+    duree = ""
+    test = 0
+    for i in duree_brut:
+        if test == 1:
+            if i != "\n" and i != "/" and i != "|":
+                duree = duree + i
+        if i == "/" or i == "|":
+            test = test + 1
 
-    date = "" 
-    nbr_saison="-"
-    if get_code_and_url(x)[0]%10==2:#serie
-        type="Serie"
-        état, date, nbr_saison= get_serie_data(soup)
+    date = ""
+    nbr_saison = "-"
+    if get_code_and_url(x)[0] % 10 == 2:  # serie
+        type = "Serie"
+        état, date, nbr_saison = get_serie_data(soup)
 
-    else :
-        type="Film"
-        état, date=get_film_data(soup)
+    else:
+        type = "Film"
+        état, date = get_film_data(soup)
     if any(chr.isdigit() for chr in duree):
         pass
     else:
-        if type=='Film':
-            duree='inconnu'
+        if type == "Film":
+            duree = "inconnu"
         else:
-            duree='30-50 min'
-    data = (f"{get_code_and_url(x)[0]}",f"{' '.join(type.split())}",f"{' '.join(titre.split())}",f"{linkphoto}",f"{' '.join(état.split())}",f"{' '.join(date.split())}",f"{' '.join(duree.split())}",f"{nbr_saison}")
+            duree = "30-50 min"
+    data = (
+        f"{get_code_and_url(x)[0]}",
+        f"{' '.join(type.split())}",
+        f"{' '.join(titre.split())}",
+        f"{linkphoto}",
+        f"{' '.join(état.split())}",
+        f"{' '.join(date.split())}",
+        f"{' '.join(duree.split())}",
+        f"{nbr_saison}",
+    )
     return data
 
+
 def get_film_data(soup):
-    if(type(soup).__name__!="BeautifulSoup"): ################# get updated film data
+    if type(soup).__name__ != "BeautifulSoup":  ################# get updated film data
         page = requests.get(get_code_and_url(soup)[1])
-        soup = BeautifulSoup ( page.content , "html.parser" )
+        soup = BeautifulSoup(page.content, "html.parser")
         soup.prettify()
     try:
-        date=""
-        date_brut= soup.find('span', attrs={'class' :"date"})
-        date_brut= ' '.join(date_brut.text.split())
-        for i in range(len(date_brut)): 
-            if date_brut[i].isdigit() or date_brut[i].isalpha()  or date_brut[i]==' ':
-                date = date + date_brut[i] 
-        mois=(''.join(list(filter(str.isalpha, date))))
-        les_mois=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"]
-        if time.strptime(datetime.today().strftime('%d %m %Y'), '%d %m %Y') > time.strptime(date.replace(mois,str(les_mois.index(mois)+1)), '%d %m %Y'):
-            état="SORTI"
+        date = ""
+        date_brut = soup.find("span", attrs={"class": "date"})
+        date_brut = " ".join(date_brut.text.split())
+        for i in range(len(date_brut)):
+            if date_brut[i].isdigit() or date_brut[i].isalpha() or date_brut[i] == " ":
+                date = date + date_brut[i]
+        mois = "".join(list(filter(str.isalpha, date)))
+        les_mois = [
+            "janvier",
+            "février",
+            "mars",
+            "avril",
+            "mai",
+            "juin",
+            "juillet",
+            "août",
+            "septembre",
+            "octobre",
+            "novembre",
+            "décembre",
+        ]
+        if time.strptime(
+            datetime.today().strftime("%d %m %Y"), "%d %m %Y"
+        ) > time.strptime(
+            date.replace(mois, str(les_mois.index(mois) + 1)), "%d %m %Y"
+        ):
+            état = "SORTI"
         else:
-            état="À VENIR"
+            état = "À VENIR"
     except:
-        date="Date Inconnue"
-        état='À VENIR'
-    return (état,' '.join(date.split()))
-
+        date = "Date Inconnue"
+        état = "À VENIR"
+    return (état, " ".join(date.split()))
 
 
 def get_serie_data(soup):
-    if(type(soup).__name__!="BeautifulSoup"): ############### get updated serie data
+    if type(soup).__name__ != "BeautifulSoup":  ############### get updated serie data
         page = requests.get(get_code_and_url(soup)[1])
-        soup = BeautifulSoup ( page.content , "html.parser" )
+        soup = BeautifulSoup(page.content, "html.parser")
         soup.prettify()
-    nbr_saison="-"
-    date_brut= soup.find('div', attrs={'class' :"meta-body-item meta-body-info"})
+    nbr_saison = "-"
+    date_brut = soup.find("div", attrs={"class": "meta-body-item meta-body-info"})
     date_brut = date_brut.text
-    date=""
-    for i in date_brut :
-        if i!='\n' and i!='/' and i!='|':      
-            date=date+i
-        if i=='/' or  i=='|':
+    date = ""
+    for i in date_brut:
+        if i != "\n" and i != "/" and i != "|":
+            date = date + i
+        if i == "/" or i == "|":
             break
     try:
-        nbr_saison = soup.find('a', attrs={'class' :"end-section-link"})
+        nbr_saison = soup.find("a", attrs={"class": "end-section-link"})
         nbr_saison = nbr_saison.text
     except:
-        nbr_saison = soup.find('div', attrs={'class' :"stats-number"})
+        nbr_saison = soup.find("div", attrs={"class": "stats-number"})
         nbr_saison = nbr_saison.text
-    nbr_saison=int(''.join(list(filter(str.isdigit, nbr_saison))))
-    try: 
-        état= soup.find('div', attrs={'class' :"label label-text label-sm label-danger-full label-status"})
-        état = état.text 
+    nbr_saison = int("".join(list(filter(str.isdigit, nbr_saison))))
+    try:
+        état = soup.find(
+            "div",
+            attrs={"class": "label label-text label-sm label-danger-full label-status"},
+        )
+        état = état.text
     except:
         try:
-            état= soup.find('div', attrs={'class' :"label label-text label-sm label-current-full label-status"})
-            état = état.text 
+            état = soup.find(
+                "div",
+                attrs={
+                    "class": "label label-text label-sm label-current-full label-status"
+                },
+            )
+            état = état.text
         except:
-                état= soup.find('div', attrs={'class' :"label label-text label-sm label-info-full label-status"})
-                état = état.text 
-                nbr_saison=0
-    return (état, ' '.join(date.split()), nbr_saison)
-
+            état = soup.find(
+                "div",
+                attrs={
+                    "class": "label label-text label-sm label-info-full label-status"
+                },
+            )
+            état = état.text
+            nbr_saison = 0
+    return (état, " ".join(date.split()), nbr_saison)

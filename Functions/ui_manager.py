@@ -1,15 +1,16 @@
 import os
 import platform
 
+
 def input_err_handling(text, text_err, list_cho):
     try:
-        cho=int(input(text))
+        cho = int(input(text))
         if cho not in list_cho:
-            1/0    
+            1 / 0
     except:
         while True:
             try:
-                cho=int(input(text_err))
+                cho = int(input(text_err))
                 if cho in list_cho:
                     break
             except:
@@ -18,38 +19,39 @@ def input_err_handling(text, text_err, list_cho):
 
 
 def update_loading(varp, text):
-    if varp<5:
+    if varp < 5:
         print(f"{text}\n\n| . . . . . . . . . . |     {varp:2.2f} %")
-    elif varp<15:
+    elif varp < 15:
         print(f"{text}\n\n| # . . . . . . . . . |     {varp:2.2f} %")
-    elif varp<25:
+    elif varp < 25:
         print(f"{text}\n\n| # # . . . . . . . . |     {varp:2.2f} %")
-    elif varp<35:
+    elif varp < 35:
         print(f"{text}\n\n| # # # . . . . . . . |     {varp:2.2f} %")
-    elif varp<45:
+    elif varp < 45:
         print(f"{text}\n\n| # # # # . . . . . . |     {varp:2.2f} %")
-    elif varp<55:
+    elif varp < 55:
         print(f"{text}\n\n| # # # # # . . . . . |     {varp:2.2f} %")
-    elif varp<65:
+    elif varp < 65:
         print(f"{text}\n\n| # # # # # # . . . . |     {varp:2.2f} %")
-    elif varp<75:
+    elif varp < 75:
         print(f"{text}\n\n| # # # # # # # . . . |     {varp:2.2f} %")
-    elif varp<85:
+    elif varp < 85:
         print(f"{text}\n\n| # # # # # # # # . . |     {varp:2.2f} %")
-    elif varp<95:
+    elif varp < 95:
         print(f"{text}\n\n| # # # # # # # # # . |     {varp:2.2f} %")
     else:
         print(f"{text}\n\n| # # # # # # # # # # |    {varp:3.2f} %")
 
+
 def clear_terminal():
     if platform.system() == "Windows":
-        os.system("cls")  
+        os.system("cls")
     else:
-        os.system("clear") 
+        os.system("clear")
 
 
 def open_cover(cover_path):
     if platform.system() == "Windows":
-        os.startfile(cover_path)  
+        os.startfile(cover_path)
     else:
         os.system(f"open '{cover_path}'")
