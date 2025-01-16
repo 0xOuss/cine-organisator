@@ -2,26 +2,29 @@ import requests
 from bs4 import BeautifulSoup
 import time
 from datetime import datetime
-from fake_useragent import UserAgent
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from config import ChromeDriver_path
 
 
 def search_url_google(x):
     x = x.replace(" ", "+")
     url_recherche = f"https://www.google.com/search?q={x}+allocine"
-    headers = {
-        "User-Agent": UserAgent().random  # Utilise un user-agent aléatoire pour simuler un vrai navigateur
-    }
-    page = requests.get(url_recherche, headers=headers)
-    soup = BeautifulSoup(page.content, "html.parser")
-    soup.prettify()
-    url = soup.find("div", attrs={"class": "MjjYud"})
-    for i in url.find_all("a"):
-        url = i.get("href")
-        break
-    url = url[7 : url.find("html") + 4]
-    url = url.replace("%3D", "=")
-    if url == "":
-        1 / 0
+
+    options = webdriver.ChromeOptions()
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--headless")
+    prefs = {"profile.managed_default_content_settings.images": 2}
+    options.add_experimental_option("prefs", prefs)
+    driver = webdriver.Chrome(service=Service(ChromeDriver_path), options=options)
+
+    driver.get(url_recherche)
+    time.sleep(2)
+    first_result = driver.find_element(By.XPATH, "//div[@class='tF2Cxc']//a")
+    url = first_result.get_attribute("href")
+    driver.quit()
     return url
 
 
