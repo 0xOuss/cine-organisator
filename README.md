@@ -31,6 +31,10 @@ To run the project, first run this command on terminal to install the requiremen
 
 `pip install -r requirements.txt`   
 
+Next, you need to download the version of ChromeDriver that is compatible with your machine. You can do so by visiting this link: [Download ChromeDriver](https://googlechromelabs.github.io/chrome-for-testing/#stable).
+
+Once downloaded, place the chromedriver file in the `utils` folder of your project. If you wish to modify the path to ChromeDriver, you can do so by changing the value of `ChromeDriver_path` in the `config.py` file.
+
 launch the main script `main.py`, which opens the main menu to start managing your collection of series and films.    
 
 
