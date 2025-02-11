@@ -1,31 +1,16 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 import time
 from datetime import datetime
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from config import ChromeDriver_path
+from googleapiclient.discovery import build
 
 
-def search_url_google(x):
-    x = x.replace(" ", "+")
-    url_recherche = f"https://www.google.com/search?q={x}+allocine"
-
-    options = webdriver.ChromeOptions()
-    options.add_argument("--disable-gpu")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--headless")
-    prefs = {"profile.managed_default_content_settings.images": 2}
-    options.add_experimental_option("prefs", prefs)
-    driver = webdriver.Chrome(service=Service(ChromeDriver_path), options=options)
-
-    driver.get(url_recherche)
-    time.sleep(2)
-    first_result = driver.find_element(By.XPATH, "//div[@class='tF2Cxc']//a")
-    url = first_result.get_attribute("href")
-    driver.quit()
-    return url
+def search_url_google(query):
+    query += " allocine"
+    service = build("customsearch", "v1", developerKey=os.environ["API_KEY"])
+    res = service.cse().list(q=query, cx=os.environ["CX"]).execute()
+    return res.get("items", [])[0]["link"]
 
 
 def get_code_and_url(x):

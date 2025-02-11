@@ -29,11 +29,23 @@ This project is structured into several modules:
 
 To run the project, first run this command on terminal to install the requirements:   
 
-`pip install -r requirements.txt`   
+```
+pip install -r requirements.txt
+```
 
-Next, you need to download the version of ChromeDriver that is compatible with your machine. You can do so by visiting this link: [Download ChromeDriver](https://googlechromelabs.github.io/chrome-for-testing/#stable).
+Next, you need to get the [Google Custom Search](https://developers.google.com/custom-search/v1/overview) API key and create a [Programmable Search Engine](https://developers.google.com/custom-search/docs/overview). You can do this by visiting the following links:
 
-Once downloaded, place the chromedriver file in the `utils` folder of your project. If you wish to modify the path to ChromeDriver, you can do so by changing the value of `ChromeDriver_path` in the `config.py` file.
+- [Get your Google Custom Search API key](https://developers.google.com/custom-search/v1/introduction) and click the 'Get a Key' button.
+- [Create and get your Programmable Search Engine ID](https://developers.google.com/custom-search/docs/tutorial/creatingcse)
+
+After that, create a `.env` file in the root directory of your project to securely store your credentials.
+In the `.env` file, add the following variables:
+```
+API_KEY=your_google_api_key 
+CX=your_custom_search_engine_id
+```
+Make sure to replace `your_google_api_key` with the API key you obtained and `your_custom_search_engine_id` with the ID of your Programmable Search Engine.
+
 
 launch the main script `main.py`, which opens the main menu to start managing your collection of series and films.    
 
